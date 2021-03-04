@@ -1,8 +1,9 @@
 import pandas as pd
 import stumpy
 import numpy as np
+import datetime
 from bokeh.plotting import figure, output_file, show
-from bokeh.models import ColumnDataSource
+from bokeh.models import ColumnDataSource, Rect
 from bokeh.models.tools import HoverTool
 
 output_file('timeSeriesPlot_example.html')
@@ -11,10 +12,26 @@ output_file('timeSeriesPlot_example.html')
 df = pd.read_csv("USD.csv")
 df['date'] = pd.to_datetime(df['date'])
 
-window_size=500
+def plotRectWindowLocation(df,idx, window_size):
+    window_width = 1000*60*60*24*window_size
+    window_height = 6000
+
+    window_x = df['date'][idx]
+    window_y = df['open_USD'][idx]+window_height/2
+    return [window_x, window_y, window_width, window_height]
+
+
+window_size=10
+
 matrix_profile = stumpy.stump(df['open_USD'], m=window_size)
-print(matrix_profile.shape)
-print(matrix_profile)
+
+motif_idx = np.argsort(matrix_profile)[:,0][0]
+nearest_neighbor_idx = matrix_profile[motif_idx,1]
+
+print(f'The motif index is {motif_idx}')
+print(f'\t It is: {matrix_profile[motif_idx]}')
+print(f'The NN index is {nearest_neighbor_idx}')
+print(f'\t It is: {matrix_profile[nearest_neighbor_idx]}')
 
 source = ColumnDataSource(df)
 
@@ -22,18 +39,13 @@ p = figure(x_axis_type="datetime")
 p.circle(x='date', y='open_USD',source=source,size=2, color='green')
 p.line(x='date', y='open_USD',source=source,line_width=2)
 
-#show(p)
+print(matrix_profile[motif_idx])
+print(df['open_USD'][motif_idx])
+print(df['open_USD'][nearest_neighbor_idx])
 
-
-'''
-x=[1,3,4,6]
-y=[2,4,6,8]
-
-p = figure()
-p.circle(x,y,size=10, color='red', legend='circle')
-p.line(x,y,color='blue', legend='line')
-p.triangle(y,x,color='gold', size=10, legend='triangle')
-p.legend.click_policy='hide'
+plotLoc = plotRectWindowLocation(df,motif_idx,window_size)
+plotLoc2 = plotRectWindowLocation(df,nearest_neighbor_idx,window_size)
+p.rect(x=plotLoc[0],y=plotLoc[1],width=plotLoc[2],height=plotLoc[3], width_units='data', fill_color="blue", fill_alpha=0.2)
+p.rect(x=plotLoc2[0],y=plotLoc2[1],width=plotLoc2[2],height=plotLoc2[3], width_units='data', fill_color="red", fill_alpha=0.2)
 
 show(p)
-'''
