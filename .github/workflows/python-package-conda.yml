@@ -25,6 +25,6 @@ jobs:
         shell: bash
         run: conda list
       - name: Run tests with pytest
-        shell: bash
+        shell: bash -l {0}
         run: pytest
 
