@@ -1,8 +1,4 @@
-name: Python Package using Conda
-
-on: [push]
-  
-name: Use Setup-Miniconda From Marketplace
+ name: Use Setup-Miniconda From Marketplace
 on: [push]
 
 jobs:
