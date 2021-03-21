@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        python-version: ["3.7", "2.7"]
+        python-version: ["3.7"]
     steps:
       - uses: conda-incubator/setup-miniconda@v2
         with:
@@ -25,5 +25,4 @@ jobs:
       - name: Test with pytest
         run: |
           conda install pytest
-          pytest
 
