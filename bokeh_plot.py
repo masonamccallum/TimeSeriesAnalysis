@@ -27,9 +27,9 @@ window_size=10
 
 def getDateInterval(df, date, window_size):
     # Rectangle fix TODO: clean and orgainze
-    #dateIntervalStart=datetime.datetime.strptime('7-1-2020','%d-%m-%Y')
-    #delta = dateIntervalStart + datetime.timedelta(days=10)
-    #print(df[(df['date']>dateIntervalStart) & (df['date']<=delta)][['date','open_USD']])
+    dateIntervalStart=datetime.datetime.strptime('7-1-2020','%d-%m-%Y')
+    delta = dateIntervalStart + datetime.timedelta(days=10)
+    print(df[(df['date']>dateIntervalStart) & (df['date']<=delta)][['date','open_USD']])
 
 
 source = ColumnDataSource(df)
@@ -42,4 +42,4 @@ p.line(x='date', y='open_USD',source=source,line_width=2)
 #p.rect(x=plotLoc[0],y=plotLoc[1],width=plotLoc[2],height=plotLoc[3], width_units='data', fill_color="blue", fill_alpha=0.2)
 #p.rect(x=plotLoc2[0],y=plotLoc2[1],width=plotLoc2[2],height=plotLoc2[3], width_units='data', fill_color="red", fill_alpha=0.2)
 
-#show(p)
+show(p)
