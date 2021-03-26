@@ -6,6 +6,7 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, Rect
 from bokeh.models.tools import HoverTool
 
+
 output_file('timeSeriesPlot_example.html')
 
 

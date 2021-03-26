@@ -9,3 +9,9 @@ def test_timeSeries2():
     # Act
     # Accert
     assert True 
+
+def test_timeSeries3():
+    # Arrange
+    # Act
+    # Accert
+    assert True 
